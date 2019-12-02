@@ -9,5 +9,4 @@ public class TrLibraryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrLibraryApplication.class, args);
 	}
-
 }
