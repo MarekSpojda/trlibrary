@@ -10,7 +10,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>MySqlFileSaver - Register</title>
+    <title>TrLibrary - Register</title>
     
     <script src="<c:url value="resources/js/jquery-3.4.1.js"/>"></script>
 </head>
@@ -19,23 +19,26 @@
         <h2>Załóż konto</h2>
         <form:form action="/register" method="post" modelAttribute="userDTO">
             <div>
-                <input type="text" name="name" placeholder="Imię"/>
+                <input type="text" name="name" placeholder="Name"/>
             </div>
             <div>
-                <input type="text" name="surname" placeholder="Nazwisko"/>
+                <input type="text" name="surname" placeholder="Surname"/>
             </div>
             <div>
                 <input type="email" name="email" placeholder="Email"/>
             </div>
             <div>
-                <input type="password" name="password" placeholder="Hasło"/>
+                <input type="date" name="birthdate" placeholder="Birthdate"/>
             </div>
             <div>
-                <input type="password" name="password2" placeholder="Powtórz hasło"/>
+                <input type="password" name="password" placeholder="Password"/>
+            </div>
+            <div>
+                <input type="password" name="password2" placeholder="Confirm pass"/>
             </div>
 
             <div>
-                <button type="submit">Załóż konto</button>
+                <button type="submit">Create account</button>
             </div>
         </form:form>
 </body>
