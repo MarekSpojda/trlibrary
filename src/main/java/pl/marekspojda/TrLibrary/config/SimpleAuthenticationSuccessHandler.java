@@ -13,15 +13,17 @@ import java.util.Set;
 
 @Component
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                        Authentication authentication) throws IOException, ServletException {
-        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+			Authentication authentication) throws IOException, ServletException {
+		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-        if (roles.contains("ROLE_ADMIN")) {
-            httpServletResponse.sendRedirect("/admin");
-        } else {
-            httpServletResponse.sendRedirect("/user");
-        }
-    }
+		if (roles.contains("ROLE_ADMIN")) {
+			httpServletResponse.sendRedirect("/admin");
+		} else if (roles.contains("ROLE_USER")) {
+			httpServletResponse.sendRedirect("/user");
+		} else {
+			httpServletResponse.sendRedirect("/student");
+		}
+	}
 }

@@ -15,7 +15,7 @@
 </head>
 <body>
 <%@ include file="header.jsp" %> 
-<h2>Zaloguj się</h2>
+<h2>Log in</h2>
         <form action="/login" method="post">
             <div>
                 <input type="email" name="username" placeholder="Email"/>
@@ -25,7 +25,7 @@
             </div>
 
             <div>
-                <button type="submit">Zaloguj się</button>
+                <button type="submit">Log in</button>
             </div>
         </form>
 </body>

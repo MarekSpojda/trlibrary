@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import pl.marekspojda.TrLibrary.dto.UserDTO;
-import pl.marekspojda.TrLibrary.repository.BookRepository;
+import pl.marekspojda.TrLibrary.entity.User;
 import pl.marekspojda.TrLibrary.repository.RoleRepository;
 import pl.marekspojda.TrLibrary.repository.UserRepository;
 
@@ -14,13 +14,10 @@ import pl.marekspojda.TrLibrary.repository.UserRepository;
 public class RegisterController {
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
-	private final BookRepository bookRepository;
 
-	public RegisterController(UserRepository userRepository, RoleRepository roleRepository,
-			BookRepository bookRepository) {
+	public RegisterController(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
-		this.bookRepository = bookRepository;
 	}
 
 	@GetMapping(path = "/register", produces = "text/html; charset=UTF-8")
@@ -31,7 +28,10 @@ public class RegisterController {
 	@PostMapping(path = "/register", produces = "text/html; charset=UTF-8")
 	public String registerPost(@ModelAttribute("userDTO") UserDTO userDTO) {
 		boolean emailExist = userRepository.existsByEmail(userDTO.getEmail());
-		if (emailExist || !userDTO.getPassword().equals(userDTO.getPassword2())) {
+		System.out.println("Date put by user: " + userDTO.getBirthDate());
+		if (emailExist || !userDTO.getPassword().equals(userDTO.getPassword2())
+				|| userRepository.findUserByNameSurnameBirthdateCustom(userDTO.getName(), userDTO.getSurname(),
+						userDTO.getBirthDate()) != null) {
 			return "redirect:/register";
 		}
 

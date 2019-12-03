@@ -9,13 +9,13 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>TrLibrary - User</title>
+    <title>TrLibrary - Student</title>
     
 <script src="<c:url value="resources/js/jquery-3.4.1.js"/>"></script>
 <script src="<c:url value="resources/js/app.js"/>"></script>    
 </head>
 <body>
 <%@ include file="header.jsp" %> 
-Seems like you're only user. Still better love story than Twilight.
+Seems like you're student. Well, first three years are difficult but don't worry, second year is easier.
 </body>
 </html>

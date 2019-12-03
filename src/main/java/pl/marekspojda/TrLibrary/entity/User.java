@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ public class User {
 	private String surname;
 	private String email;
 	private String password;
+	@Column(columnDefinition = "DATE")
 	private Date birthDate;
 	private int active = 1;
 
@@ -61,6 +63,7 @@ public class User {
 		this.setSurname(userDTO.getSurname());
 		this.setEmail(userDTO.getEmail());
 		this.setPassword(new SecurityConfiguration().passwordEncoder().encode(userDTO.getPassword()));
+		this.setBirthDate(userDTO.getBirthDate());
 
 		// Adding role 'STUDENT' to new user if that role is present in table 'role'
 		// under index 3

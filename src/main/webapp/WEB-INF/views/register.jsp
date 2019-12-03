@@ -16,30 +16,37 @@
 </head>
 <body>
 <%@ include file="header.jsp" %> 
-        <h2>Załóż konto</h2>
+        <h2>Create account</h2>
+        <table>
         <form:form action="/register" method="post" modelAttribute="userDTO">
-            <div>
-                <input type="text" name="name" placeholder="Name"/>
-            </div>
-            <div>
-                <input type="text" name="surname" placeholder="Surname"/>
-            </div>
-            <div>
-                <input type="email" name="email" placeholder="Email"/>
-            </div>
-            <div>
-                <input type="date" name="birthdate" placeholder="Birthdate"/>
-            </div>
-            <div>
-                <input type="password" name="password" placeholder="Password"/>
-            </div>
-            <div>
-                <input type="password" name="password2" placeholder="Confirm pass"/>
-            </div>
-
-            <div>
-                <button type="submit">Create account</button>
-            </div>
+            <tr>
+               <td>Your name</td>
+               <td><div><input type="text" name="name" placeholder="Name"/></div></td>
+            </tr>
+            <tr>
+               <td>Your surname</td>
+               <td><div><input type="text" name="surname" placeholder="Surname"/></div></td>
+            </tr>
+            <tr>
+               <td>Your e-mail</td>
+               <td><div><input type="email" name="email" placeholder="Email"/></div></td>
+            </tr>
+            <tr>
+               <td>Your birthdate</td>
+               <td><div><input type="date" name="birthDate" placeholder="Birthdate"/></div></td>
+            </tr>
+            <tr>
+               <td>Your password</td>
+               <td><div><input type="password" name="password" placeholder="Password"/></div></td>
+            </tr>
+            <tr>
+               <td>Confirm password</td>
+               <td><div><input type="password" name="password2" placeholder="Confirm pass"/></div></td>
+            </tr>
+            <tr>
+               <td><div><button type="submit">Create account</button></div></td>
+            </tr>
         </form:form>
+        </table>
 </body>
 </html>
