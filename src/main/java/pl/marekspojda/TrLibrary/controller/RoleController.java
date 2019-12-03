@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -21,6 +22,7 @@ public class RoleController {
 		this.roleRepository = roleRepository;
 	}
 
+	@Secured({ "ROLE_STUDENT" })
 	@PostMapping(path = "/studenttouser", produces = "text/html; charset=UTF-8")
 	public void studentToUserPost(Principal principal, HttpServletRequest request) {
 		User loadedUser = userRepository.findUserByEmailCustom(principal.getName());
@@ -30,6 +32,7 @@ public class RoleController {
 		userRepository.save(loadedUser);
 	}
 
+	@Secured({ "ROLE_STUDENT" })
 	@PostMapping(path = "/studenttoadmin", produces = "text/html; charset=UTF-8")
 	public void studentToAdminPost(Principal principal, HttpServletRequest request) {
 		User loadedUser = userRepository.findUserByEmailCustom(principal.getName());

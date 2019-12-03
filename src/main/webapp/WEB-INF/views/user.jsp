@@ -16,6 +16,15 @@
 </head>
 <body>
 <%@ include file="header.jsp" %> 
-Seems like you're only user. Still better love story than Twilight.
+Seems like you're only user. Still better love story than Twilight.<br>
+
+<form><div>
+    <button type="submit" id="listallbooks">List all books</button>
+    <button type="submit" id="listavailablebooks">List available books</button>
+    <button type="submit" id="listallstudents">List all students</button>
+</div></form>
+<br>
+
+<div id="usermessagediv"></div>
 </body>
 </html>

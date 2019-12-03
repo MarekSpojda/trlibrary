@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import pl.marekspojda.TrLibrary.converter.StringToDateConverter;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
 @EnableJpaRepositories(basePackages = { "pl.marekspojda.TrLibrary.repository" })
 @Configuration

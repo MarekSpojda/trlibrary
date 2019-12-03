@@ -3,6 +3,7 @@ package pl.marekspojda.TrLibrary.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,28 +17,22 @@ public class LoginController implements ErrorController {
 		return "login";
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/admin", produces = "text/html; charset=UTF-8", method = RequestMethod.GET)
 	public String allowedToAdminsOnly(HttpServletRequest request) {
-		if (request.isUserInRole("ROLE_ADMIN")) {
 			return "admin";
-		}
-		return "redirect:/";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(path = "/user", produces = "text/html; charset=UTF-8", method = RequestMethod.GET)
 	public String allowedToUsersOnly(HttpServletRequest request) {
-		if (request.isUserInRole("ROLE_USER")) {
 			return "user";
-		}
-		return "redirect:/";
 	}
 
+	@Secured({ "ROLE_STUDENT" })
 	@RequestMapping(path = "/student", produces = "text/html; charset=UTF-8", method = RequestMethod.GET)
 	public String allowedToStudentsOnly(HttpServletRequest request) {
-		if (request.isUserInRole("ROLE_STUDENT")) {
 			return "student";
-		}
-		return "redirect:/";
 	}
 
 	@RequestMapping(value = PATH)
