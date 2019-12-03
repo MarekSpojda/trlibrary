@@ -16,6 +16,18 @@
 </head>
 <body>
 <%@ include file="header.jsp" %> 
-Seems like you're student. Well, first three years are difficult but don't worry, second year is easier.
+Seems like you're student. Well, first three years are difficult but don't worry, second year is easier.<br><br>
+
+<p><b><font color="red">CAUTION! Below options should be used only to test menu that is available for administrator and user!<br>
+Once clicked, log out/in to allow changes to take effect.</font></b></p>
+<form><div>
+    <button type="submit" id="studenttouser">Turn student to user</button>
+</div></form>
+
+<form><div>
+    <button type="submit" id="studenttoadmin">Turn student to admin</button>
+</div></form>
+
+<div id="messagediv"></div>
 </body>
 </html>

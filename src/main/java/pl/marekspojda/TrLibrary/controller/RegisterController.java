@@ -28,7 +28,6 @@ public class RegisterController {
 	@PostMapping(path = "/register", produces = "text/html; charset=UTF-8")
 	public String registerPost(@ModelAttribute("userDTO") UserDTO userDTO) {
 		boolean emailExist = userRepository.existsByEmail(userDTO.getEmail());
-		System.out.println("Date put by user: " + userDTO.getBirthDate());
 		if (emailExist || !userDTO.getPassword().equals(userDTO.getPassword2())
 				|| userRepository.findUserByNameSurnameBirthdateCustom(userDTO.getName(), userDTO.getSurname(),
 						userDTO.getBirthDate()) != null) {

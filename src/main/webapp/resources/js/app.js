@@ -1,37 +1,25 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let divforfiles = $("#userfiles");
-    
+document.addEventListener("DOMContentLoaded", function () {    
     //Run endpoint without redirect, call java method and do nothing in case of success
-    $('#saveform').submit(function(e){
-      e.preventDefault();
-      $.ajax({
-        url:'/savefile/',
-        type:'post',
-        data:$('#saveform').serialize(),
-        success:function(){
-        }
-      });
-    });
-
-    $("#showuserfiles").on("click", function (event) {
+    $("#studenttouser").on("click", function (event) {
         event.preventDefault();
         $.ajax({
-            type: 'GET',
-            url: '/userfiles',
+            type: 'POST',
+            url: '/studenttouser',
             contentType: 'application/json',
             success: function (data) {
-                divforfiles.html(data);
+                $("#messagediv").html("Student should be user now");
             }
         });
     });
     
-    divforfiles.on("click", "button", function (event) {
+    $("#studenttoadmin").on("click", function (event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '/files/'+$(this).attr("fileidval"),
+            url: '/studenttoadmin',
             contentType: 'application/json',
             success: function (data) {
+                $("#messagediv").html("Student should be administrator now");
             }
         });
     });
