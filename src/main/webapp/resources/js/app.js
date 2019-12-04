@@ -60,11 +60,47 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     
-    $("#usermessagediv").on("click", "button", function (event) {
+    $("#usermessagediv").on("click", ".liststudentbooksbutton", function (event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/student/'+$(this).attr("studentid"),
+            contentType: 'application/json',
+            success: function (data) {
+              $("#usermessagediv").html(data);
+            }
+        });
+    });
+    
+    $("#usermessagediv").on("click", ".rentbooktostudentbutton", function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/rentbook/'+$(this).attr("booktorentid"),
+            contentType: 'application/json',
+            success: function (data) {
+              $("#usermessagediv").html(data);
+            }
+        });
+    });
+    
+    $("#usermessagediv").on("click", ".rentbooktostudentconfirm", function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/assignbooktostudent/'+$(this).attr("bookId")+'/'+$(this).attr("userId"),
+            contentType: 'application/json',
+            success: function (data) {
+              $("#usermessagediv").html(data);
+            }
+        });
+    });
+    
+    $("#usermessagediv").on("click", ".returnbook", function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/returnbook/'+$(this).attr("bookId")+'/'+$(this).attr("userId"),
             contentType: 'application/json',
             success: function (data) {
               $("#usermessagediv").html(data);

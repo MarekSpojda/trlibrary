@@ -5,8 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import pl.marekspojda.TrLibrary.dto.BookToRentDTO;
 
 @Controller
 public class LoginController implements ErrorController {
@@ -25,7 +28,8 @@ public class LoginController implements ErrorController {
 
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(path = "/user", produces = "text/html; charset=UTF-8", method = RequestMethod.GET)
-	public String allowedToUsersOnly(HttpServletRequest request) {
+	public String allowedToUsersOnly(HttpServletRequest request, Model model) {
+		model.addAttribute("bookToRentDTO", new BookToRentDTO());
 			return "user";
 	}
 

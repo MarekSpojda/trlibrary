@@ -21,7 +21,7 @@ public class RegisterController {
 	}
 
 	@GetMapping(path = "/register", produces = "text/html; charset=UTF-8")
-	public String register() {
+	public String registerGet() {
 		return "register";
 	}
 
