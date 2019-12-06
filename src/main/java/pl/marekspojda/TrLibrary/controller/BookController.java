@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,21 +65,26 @@ public class BookController {
 	}
 
 	@Secured({ "ROLE_USER" })
-	@RequestMapping(path = "/rentbook/{id}", produces = "text/html; charset=UTF-8", method = RequestMethod.POST)
+	@RequestMapping(path = "/rentbook/{bookId}", method = RequestMethod.POST)
+	public String rentBookPost(@PathVariable String bookId, Model model) {
+		model.addAttribute("rentBookId", bookId);
+		model.addAttribute("rentBookName", bookRepository.findById(Long.parseLong(bookId)).get().getTitle());
+		model.addAttribute("rentListOfStudents", userRepository.findAllOrderBySurname());
+		return "rent";
+	}
+
+	@Secured({ "ROLE_USER" })
+	@PostMapping(path = "/rentconfirm/{bookId}/{userId}", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public String rentBookToStudentPost(@PathVariable String id) {
-		Book book = bookRepository.findById(Long.parseLong(id)).get();
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Book ").append(book.getTitle()).append("<br>");
-
-		for (User user : userRepository.findAll()) {
-			stringBuilder.append("<button type=\"button\" class=\"rentbooktostudentconfirm\" bookId=\"")
-					.append(book.getBookId()).append("\" userId=\"").append(user.getUserId())
-					.append("\">Assign book to ").append(user.getName() + " " + user.getSurname())
-					.append("</button><br>");
-		}
-
-		return stringBuilder.toString();
+	public String rentConfirmPost(@PathVariable String bookId, @PathVariable String userId) {
+		User student = userRepository.findById(Long.parseLong(userId)).get();
+		Book book = bookRepository.findById(Long.parseLong(bookId)).get();
+		book.setAvailable(false);
+		book.setStudentId(student.getUserId());
+		bookRepository.save(book);
+		student.getBooks().add(book);
+		userRepository.save(student);
+		return "Book rented to user";
 	}
 
 	@Secured({ "ROLE_USER" })
@@ -122,7 +128,7 @@ public class BookController {
 
 	// Provide code of button to rent a book
 	private String makeRentButtonCode(Book book) {
-		return "<td><button type=\"button\" class=\"rentbooktostudentbutton\" booktorentid=\"" + book.getBookId()
+		return "<td><button type=\"button\" class=\"rentbook\" booktorentid=\"" + book.getBookId()
 				+ "\">Rent book</button></td>";
 	}
 

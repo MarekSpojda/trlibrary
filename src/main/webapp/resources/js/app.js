@@ -107,4 +107,28 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    
+    $("#usermessagediv").on("click", ".rentbook", function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/rentbook/'+$(this).attr("booktorentid"),
+            contentType: 'application/json',
+            success: function (data) {
+              $("#usermessagediv").html(data);
+            }
+        });
+    });
+    
+    $("#usermessagediv").on("click", ".rentConfirmationButton", function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/rentconfirm/'+$("#bookId").val()+'/'+$("#selectId").val(),
+            contentType: 'application/json',
+            success: function (data) {
+              $("#usermessagediv").html(data);
+            }
+        });
+    });
 });

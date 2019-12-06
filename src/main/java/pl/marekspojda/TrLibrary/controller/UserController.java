@@ -29,7 +29,7 @@ public class UserController {
 		StringBuilder stringBuilder = new StringBuilder(
 				"List of all students:<br><table><tr><th>Name</th><th>Surname</th><th>Birthdate</th><th>E-mail</th><th></th></tr>");
 
-		List<User> users = userRepository.findAll();
+		List<User> users = userRepository.findAllOrderBySurname();
 		for (User user : users) {
 			stringBuilder.append("<tr><td>" + user.getName() + "</td>").append("<td>" + user.getSurname() + "</td>")
 					.append("<td>" + user.getBirthDate().toString().substring(0, 10) + "</td>")
