@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,37 +32,38 @@ public class BookController {
 	@Secured({ "ROLE_USER" })
 	@PostMapping(path = "/listallbooks", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public String listAllBooksByUserPost() {
-		StringBuilder stringBuilder = new StringBuilder(
+	public String listAllBooksPost() {
+		StringBuilder allBooksAsHtml = new StringBuilder(
 				"List of all books:<br><table><tr><th>Title</th><th>Genre</th><th>Release</th><th>Student</th></tr>");
 
-		List<Book> books = bookRepository.findAllOrderByTitleAsc();
-		for (Book book : books) {
-			stringBuilder.append("<tr><td>" + book.getTitle() + "</td>").append("<td>" + book.getGenre() + "</td>")
+		List<Book> allBooks = bookRepository.findAllOrderByTitleAsc();
+		for (Book book : allBooks) {
+			allBooksAsHtml.append("<tr><td>" + book.getTitle() + "</td>").append("<td>" + book.getGenre() + "</td>")
 					.append("<td>" + book.getReleaseDate().toString().substring(0, 10)).append("</td>");
-			stringBuilder.append(getBookOwnerInfo(book));
-			stringBuilder.append("</tr>");
+			allBooksAsHtml.append(getBookOwnerInfo(book));
+			allBooksAsHtml.append("</tr>");
 		}
 
-		return stringBuilder.toString() + "</table>";
+		return allBooksAsHtml.toString() + "</table>";
 	}
 
 	@Secured({ "ROLE_USER" })
 	@PostMapping(path = "/listavailablebooks", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public String listAvailableBookByUsersPost() {
-		StringBuilder stringBuilder = new StringBuilder(
+	public String listAvailableBooksPost() {
+		StringBuilder availableBooksAsHtml = new StringBuilder(
 				"List of available books:<br><table><tr><th>Title</th><th>Genre</th><th>Release</th><th>(rent book)</th></tr>");
 
 		List<Book> books = bookRepository.findAllAvailableOrderByTitleAsc();
 		for (Book book : books) {
-			stringBuilder.append("<tr><td>" + book.getTitle() + "</td>").append("<td>" + book.getGenre() + "</td>")
+			availableBooksAsHtml.append("<tr><td>" + book.getTitle() + "</td>")
+					.append("<td>" + book.getGenre() + "</td>")
 					.append("<td>" + book.getReleaseDate().toString().substring(0, 10)).append("</td>")
 					.append(makeRentButtonCode(book));
-			stringBuilder.append("</tr>");
+			availableBooksAsHtml.append("</tr>");
 		}
 
-		return stringBuilder.toString() + "</table>";
+		return availableBooksAsHtml.toString() + "</table>";
 	}
 
 	@Secured({ "ROLE_USER" })
@@ -72,6 +74,8 @@ public class BookController {
 		model.addAttribute("rentListOfStudents", userRepository.findAllOrderBySurname());
 		return "rent";
 	}
+
+	// TODO cleanup library done to here
 
 	@Secured({ "ROLE_USER" })
 	@PostMapping(path = "/rentconfirm/{bookId}/{userId}", produces = "text/html; charset=UTF-8")
@@ -130,6 +134,22 @@ public class BookController {
 	private String makeRentButtonCode(Book book) {
 		return "<td><button type=\"button\" class=\"rentbook\" booktorentid=\"" + book.getBookId()
 				+ "\">Rent book</button></td>";
+	}
+
+	@GetMapping(path = "/rent2", produces = "text/html; charset=UTF-8")
+	public String rent2Get() {
+		return "rent3";
+	}
+
+	@PostMapping(path = "/returnrent3", produces = "text/html; charset=UTF-8")
+	public String returnRent3Post() {
+		return "rent2";
+	}
+
+	@PostMapping(path = "/rent2", produces = "text/html; charset=UTF-8")
+	@ResponseBody
+	public String rent2Post(@ModelAttribute("bookToRentDTO") BookToRentDTO bookToRentDTO) {
+		return "userId: " + bookToRentDTO.getUserId() + ", bookId: " + bookToRentDTO.getBookId();
 	}
 
 	@ModelAttribute("bookToRentDTO")

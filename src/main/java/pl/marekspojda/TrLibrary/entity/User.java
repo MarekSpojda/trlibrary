@@ -62,7 +62,7 @@ public class User {
 		this.setName(userDTO.getName());
 		this.setSurname(userDTO.getSurname());
 		this.setEmail(userDTO.getEmail());
-		this.setPassword(new SecurityConfiguration().passwordEncoder().encode(userDTO.getPassword()));
+		this.setPassword(new SecurityConfiguration().getPasswordEncoderBean().encode(userDTO.getPassword()));
 		this.setBirthDate(userDTO.getBirthDate());
 
 		// Adding role 'STUDENT' to new user if that role is present in table 'role'

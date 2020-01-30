@@ -20,7 +20,7 @@ import pl.marekspojda.TrLibrary.converter.StringToDateConverter;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	public PasswordEncoder getPasswordEncoderBean() {
 		return new BCryptPasswordEncoder();
 	}
 

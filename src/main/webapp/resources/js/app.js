@@ -131,4 +131,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    
+    $("#hmm").on("click", ".hmmbutton", function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/returnrent3/',
+            contentType: 'application/json',
+            success: function (data) {
+              $("#hmm").html(data);
+            }
+        });
+    });
 });
