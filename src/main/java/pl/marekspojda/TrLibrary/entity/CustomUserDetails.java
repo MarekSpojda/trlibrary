@@ -12,6 +12,7 @@ import java.util.List;
 public class CustomUserDetails extends User implements UserDetails {
 	private static final long serialVersionUID = 4580143358086688090L;
 
+	// TODO cleanup up to here
 	public CustomUserDetails(final User user) {
 		super(user);
 	}

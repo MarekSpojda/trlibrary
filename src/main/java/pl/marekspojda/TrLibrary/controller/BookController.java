@@ -75,8 +75,6 @@ public class BookController {
 		return "rent";
 	}
 
-	// TODO cleanup library done to here
-
 	@Secured({ "ROLE_USER" })
 	@PostMapping(path = "/rentconfirm/{bookId}/{userId}", produces = "text/html; charset=UTF-8")
 	@ResponseBody
@@ -92,23 +90,9 @@ public class BookController {
 	}
 
 	@Secured({ "ROLE_USER" })
-	@PostMapping(path = "/assignbooktostudent/{bookId}/{userId}", produces = "text/html; charset=UTF-8")
-	@ResponseBody
-	public String assignBookToStudentPost(@PathVariable String bookId, @PathVariable String userId) {
-		User student = userRepository.findById(Long.parseLong(userId)).get();
-		Book book = bookRepository.findById(Long.parseLong(bookId)).get();
-		book.setAvailable(false);
-		book.setStudentId(student.getUserId());
-		bookRepository.save(book);
-		student.getBooks().add(book);
-		userRepository.save(student);
-		return "Book rented to user";
-	}
-
-	@Secured({ "ROLE_USER" })
 	@PostMapping(path = "/returnbook/{bookId}/{userId}", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public String retunrBookPost(@PathVariable String bookId, @PathVariable String userId) {
+	public String returnBookPost(@PathVariable String bookId, @PathVariable String userId) {
 		User student = userRepository.findById(Long.parseLong(userId)).get();
 		Book book = bookRepository.findById(Long.parseLong(bookId)).get();
 		student.getBooks().remove(book);
@@ -119,7 +103,6 @@ public class BookController {
 		return "Book returned";
 	}
 
-	// Provides info of student who rented a book
 	private String getBookOwnerInfo(Book book) {
 		if (book.getStudentId() != null) {
 			User user = userRepository.findById(book.getStudentId()).get();
@@ -130,7 +113,6 @@ public class BookController {
 		return "<td>(book available)</td>";
 	}
 
-	// Provide code of button to rent a book
 	private String makeRentButtonCode(Book book) {
 		return "<td><button type=\"button\" class=\"rentbook\" booktorentid=\"" + book.getBookId()
 				+ "\">Rent book</button></td>";

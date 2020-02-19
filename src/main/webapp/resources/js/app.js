@@ -84,18 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     
-    $("#usermessagediv").on("click", ".rentbooktostudentconfirm", function (event) {
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '/assignbooktostudent/'+$(this).attr("bookId")+'/'+$(this).attr("userId"),
-            contentType: 'application/json',
-            success: function (data) {
-              $("#usermessagediv").html(data);
-            }
-        });
-    });
-    
     $("#usermessagediv").on("click", ".returnbook", function (event) {
         event.preventDefault();
         $.ajax({

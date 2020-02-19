@@ -26,17 +26,17 @@ public class UserController {
 	@PostMapping(path = "/listallstudents", produces = "text/html; charset=UTF-8")
 	@ResponseBody
 	public String listAllStudentsPost() {
-		StringBuilder stringBuilder = new StringBuilder(
+		StringBuilder listOfAllStudents = new StringBuilder(
 				"List of all students:<br><table><tr><th>Name</th><th>Surname</th><th>Birthdate</th><th>E-mail</th><th></th></tr>");
 
 		List<User> users = userRepository.findAllOrderBySurname();
 		for (User user : users) {
-			stringBuilder.append("<tr><td>" + user.getName() + "</td>").append("<td>" + user.getSurname() + "</td>")
+			listOfAllStudents.append("<tr><td>" + user.getName() + "</td>").append("<td>" + user.getSurname() + "</td>")
 					.append("<td>" + user.getBirthDate().toString().substring(0, 10) + "</td>")
 					.append("<td>" + user.getEmail() + "</td>").append(makeStudensBookButton(user)).append("</tr>");
 		}
 
-		return stringBuilder.toString() + "</table>";
+		return listOfAllStudents.toString() + "</table>";
 	}
 
 	@Secured({ "ROLE_USER" })
@@ -44,20 +44,19 @@ public class UserController {
 	@ResponseBody
 	public String listBooksRentedByStudentPost(@PathVariable String id) {
 		User user = userRepository.findById(Long.parseLong(id)).get();
-		StringBuilder stringBuilder = new StringBuilder("Books of " + user.getName() + " " + user.getSurname()
+		StringBuilder booksOfStudent = new StringBuilder("Books of " + user.getName() + " " + user.getSurname()
 				+ ":<br><table><tr><th>Title</th><th>Genre</th><th>Release</th></tr>");
 		for (Book book : user.getBooks()) {
-			stringBuilder.append("<tr><td>" + book.getTitle() + "</td>").append("<td>" + book.getGenre() + "</td>")
+			booksOfStudent.append("<tr><td>" + book.getTitle() + "</td>").append("<td>" + book.getGenre() + "</td>")
 					.append("<td>" + book.getReleaseDate().toString().substring(0, 10)).append("</td>")
 					.append("<td><button type=\"button\" class=\"returnbook\" bookId=\"" + book.getBookId())
 					.append("\" userId=\"" + user.getUserId() + "\">Return book</button></td>");
-			stringBuilder.append("</tr>");
+			booksOfStudent.append("</tr>");
 		}
 
-		return stringBuilder.toString() + "</table>";
+		return booksOfStudent.toString() + "</table>";
 	}
 
-	// Provides code of button to list student's books
 	private String makeStudensBookButton(User user) {
 		return "<td><button type=\"button\" class=\"liststudentbooksbutton\" studentid=\"" + user.getUserId()
 				+ "\">Books of student</button></td>";
